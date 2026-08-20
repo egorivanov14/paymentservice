@@ -1,0 +1,19 @@
+{
+  "databaseChangeLog": [
+    {
+      "include": {
+        "file": "db/changelog/changes/001-create-payments-collection.json"
+      }
+    },
+    {
+      "include": {
+        "file": "db/changelog/changes/002-add-index-order-id.json"
+      }
+    },
+    {
+      "include": {
+        "file": "db/changelog/changes/003-add-index-user-id.json"
+      }
+    }
+  ]
+}

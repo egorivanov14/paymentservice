@@ -1,0 +1,27 @@
+{
+  "databaseChangeLog": [
+    {
+      "changeSet": {
+        "id": "003-create-index-user-id",
+        "author": "max203383@gmail.com",
+        "changes": [
+          {
+            "createIndex": {
+              "collectionName": "payments",
+              "keys": {
+                "$rawJson": {
+                  "user_id": 1
+                }
+              },
+              "options": {
+                "$rawJson": {
+                  "name": "idx_payments_user_id"
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

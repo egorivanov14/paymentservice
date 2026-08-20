@@ -1,0 +1,17 @@
+{
+  "databaseChangeLog": [
+    {
+      "changeSet": {
+        "id": "001-create-payments-collection",
+        "author": "max203383@gmail.com",
+        "changes": [
+          {
+            "createCollection": {
+              "collectionName": "payments"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

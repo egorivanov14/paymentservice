@@ -1,0 +1,6 @@
+spring:
+  liquibase:
+    url: mongodb://paymentservice-db:27017/${PAYMENTSERVICE_MONGO_DB}
+
+  mongodb:
+    uri: mongodb://paymentservice-db:27017/${PAYMENTSERVICE_MONGO_DB}
