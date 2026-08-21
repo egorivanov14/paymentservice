@@ -1,6 +1,7 @@
 package com.innowise.paymentservice.entity;
 
 import com.innowise.paymentservice.dto.PaymentStatus;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
@@ -8,9 +9,10 @@ import org.springframework.data.mongodb.core.mapping.Field;
 import java.time.LocalDateTime;
 
 @Document(collection = "payments")
+
 public class Payment {
   @Id
-  private Long id;
+  private String id;
 
   @Field(name = "order_id")
   private Long orderId;
@@ -20,18 +22,20 @@ public class Payment {
 
   private PaymentStatus status;
 
+  @CreatedDate
   private LocalDateTime timestamp;
 
   @Field(name = "payment_amount")
   private Long paymentAmount;
 
-  public Payment() {}
+  public Payment() {
+  }
 
-  public Long getId() {
+  public String getId() {
     return id;
   }
 
-  public void setId(Long id) {
+  public void setId(String id) {
     this.id = id;
   }
 

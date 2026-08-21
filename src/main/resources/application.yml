@@ -7,3 +7,6 @@ spring:
 
   liquibase:
     change-log: db/changelog/changelog-master.json
+
+client:
+  url: ${RANDOM_CLIENT_URL}

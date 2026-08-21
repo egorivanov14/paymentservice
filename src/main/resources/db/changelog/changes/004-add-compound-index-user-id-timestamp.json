@@ -1,0 +1,28 @@
+{
+  "databaseChangeLog": [
+    {
+      "changeSet": {
+        "id": "004-add-compound-index-user-id-timestamp",
+        "author": "max203383@gmail.com",
+        "changes": [
+          {
+            "createIndex": {
+              "collectionName": "payments",
+              "keys": {
+                "$rawJson": {
+                  "user_id": 1,
+                  "timestamp": 1
+                }
+              },
+              "options": {
+                "$rawJson": {
+                  "name": "idx_payments_user_id_timestamp"
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

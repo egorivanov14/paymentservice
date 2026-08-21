@@ -1,0 +1,9 @@
+spring:
+  liquibase:
+    url: mongodb://localhost:27017/test
+
+  mongodb:
+    uri: mongodb://localhost:27017/test
+
+client:
+  url: https://api.random.org/json-rpc/4/invoke
