@@ -2,11 +2,10 @@ package com.innowise.paymentservice.service.impl;
 
 import com.innowise.paymentservice.client.RandomNumberClient;
 import com.innowise.paymentservice.client.dto.GetRandomIntResponse;
-import com.innowise.paymentservice.dto.CreatePaymentRequest;
-import com.innowise.paymentservice.dto.PaymentResponse;
-import com.innowise.paymentservice.dto.PaymentStatus;
-import com.innowise.paymentservice.dto.TotalSumDto;
+import com.innowise.paymentservice.dto.*;
 import com.innowise.paymentservice.entity.Payment;
+import com.innowise.paymentservice.exception.NotFoundException;
+import com.innowise.paymentservice.kafka.PaymentServiceEventProducer;
 import com.innowise.paymentservice.mapper.PaymentMapper;
 import com.innowise.paymentservice.repository.PaymentRepository;
 import com.innowise.paymentservice.service.PaymentService;
@@ -20,11 +19,13 @@ public class PaymentServiceImpl implements PaymentService {
   private final PaymentRepository paymentRepository;
   private final RandomNumberClient randomNumberClient;
   private final PaymentMapper mapper;
+  private final PaymentServiceEventProducer paymentServiceEventProducer;
 
-  public PaymentServiceImpl(PaymentRepository paymentRepository, RandomNumberClient randomNumberClient, PaymentMapper mapper) {
+  public PaymentServiceImpl(PaymentRepository paymentRepository, RandomNumberClient randomNumberClient, PaymentMapper mapper, PaymentServiceEventProducer paymentServiceEventProducer) {
     this.paymentRepository = paymentRepository;
     this.randomNumberClient = randomNumberClient;
     this.mapper = mapper;
+    this.paymentServiceEventProducer = paymentServiceEventProducer;
   }
 
   @Override
@@ -38,13 +39,18 @@ public class PaymentServiceImpl implements PaymentService {
     payment.setStatus(paymentStatus);
 
     Payment savedPayment = paymentRepository.save(payment);
+
+    Long orderId = savedPayment.getOrderId();
+    KafkaEventDto kafkaEventDto = new KafkaEventDto(orderId, paymentStatus);
+    paymentServiceEventProducer.sendPaymentEvent(kafkaEventDto);
+
     return mapper.paymentToPaymentResponse(savedPayment);
   }
 
   @Override
   public PaymentResponse getByOrderId(Long orderId) {
     Payment payment = paymentRepository.findByOrderId(orderId)
-            .orElseThrow(() -> new RuntimeException("Payment not found"));//todo custom exception
+            .orElseThrow(() -> new NotFoundException("Payment not found"));
     return mapper.paymentToPaymentResponse(payment);
   }
 

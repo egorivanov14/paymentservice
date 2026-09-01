@@ -4,3 +4,6 @@ spring:
 
   mongodb:
     uri: mongodb://localhost:${PAYMENTSERVICE_MONGO_PORT}/${PAYMENTSERVICE_MONGO_DB}
+
+  kafka:
+    bootstrap-servers: localhost:${KAFKA_PORT}

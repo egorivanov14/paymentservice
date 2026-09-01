@@ -13,4 +13,6 @@ public class Constants {
   public static final String JSONRPC = "jsonrpc";
   public static final String RANDOM_CLIENT_METHOD = "generateIntegers";
   public static final int RANDOM_CLIENT_REQUEST_ID = 976824;
+  public static final String KAFKA_PAYMENTS_TOPIC_NAME = "payment-events";
+  public static final int KAFKA_PAYMENTS_TOPIC_PARTITIONS_NUMBER = 1;
 }

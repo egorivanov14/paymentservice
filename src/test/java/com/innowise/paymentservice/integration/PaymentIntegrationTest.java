@@ -12,7 +12,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import static com.innowise.paymentservice.TestConstants.*;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-public class RepositoryIntegrationTest extends AbstractIntegrationTest {
+public class PaymentIntegrationTest extends AbstractIntegrationTest {
   @Autowired
   MongoTemplate mongoTemplate;
   @Autowired
@@ -34,14 +34,12 @@ public class RepositoryIntegrationTest extends AbstractIntegrationTest {
     payment.setOrderId(ORDER_ID);
     payment.setUserId(USER_ID);
     payment.setStatus(PAYMENT_STATUS);
-    payment.setTimestamp(TIMESTAMP);
     payment.setPaymentAmount(PAYMENT_AMOUNT);
 
     Payment savedPayment = paymentRepository.save(payment);
 
     assertThat(savedPayment.getId()).isNotNull();
     assertThat(savedPayment.getStatus()).isEqualTo(PAYMENT_STATUS);
-    assertThat(savedPayment.getTimestamp()).isEqualTo(TIMESTAMP);
     assertThat(savedPayment.getPaymentAmount()).isEqualTo(PAYMENT_AMOUNT);
     assertThat(savedPayment.getOrderId()).isEqualTo(ORDER_ID);
     assertThat(savedPayment.getUserId()).isEqualTo(USER_ID);
