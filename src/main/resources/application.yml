@@ -8,5 +8,12 @@ spring:
   liquibase:
     change-log: db/changelog/changelog-master.json
 
+  kafka:
+    producer:
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
+      properties:
+        spring.json.use.type.headers: false
+
 client:
   url: ${RANDOM_CLIENT_URL}

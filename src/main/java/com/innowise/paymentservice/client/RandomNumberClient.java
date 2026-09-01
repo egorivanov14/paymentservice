@@ -3,6 +3,7 @@ package com.innowise.paymentservice.client;
 import com.innowise.paymentservice.client.dto.GetRandomIntNumberParams;
 import com.innowise.paymentservice.client.dto.GetRandomIntNumberRequest;
 import com.innowise.paymentservice.client.dto.GetRandomIntResponse;
+import com.innowise.paymentservice.exception.ExternalServerException;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
@@ -34,7 +35,7 @@ public class RandomNumberClient {
             .retrieve()
             .onStatus(HttpStatusCode::isError,
                     ((request, response) -> {
-                      throw new RuntimeException();//todo custom exception
+                      throw new ExternalServerException("Failed to gat random number from external server");
                     }))
             .toEntity(GetRandomIntResponse.class)
             .getBody();
