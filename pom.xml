@@ -105,6 +105,12 @@
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>org.wiremock.integrations.testcontainers</groupId>
+      <artifactId>wiremock-testcontainers-module</artifactId>
+      <version>1.0-alpha-15</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 
   <build>

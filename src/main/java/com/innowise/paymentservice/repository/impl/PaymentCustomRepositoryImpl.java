@@ -1,5 +1,6 @@
 package com.innowise.paymentservice.repository.impl;
 
+import com.innowise.paymentservice.dto.TotalSumDto;
 import com.innowise.paymentservice.repository.PaymentCustomRepository;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
@@ -21,27 +22,28 @@ public class PaymentCustomRepositoryImpl implements PaymentCustomRepository {
   }
 
   @Override
-  public long getTotalSumByUserIdAndDateRange(Long userId, LocalDateTime startDate, LocalDateTime endDate) {
+  public TotalSumDto getTotalSumByUserIdAndDateRange(Long userId, LocalDateTime startDate, LocalDateTime endDate) {
     Aggregation aggregation = Aggregation.newAggregation(
             Aggregation.match(
                     Criteria.where(USER_ID_MONGO_KEY).is(userId)
+                            .and(TIMESTAMP_MONGO_KEY)
                             .gte(startDate)
                             .lte(endDate)
             ),
             Aggregation.group()
                     .sum(PAYMENT_AMOUNT_MONGO_KEY)
-                    .as(TOTAL_VARIABLE)
+                    .as(TOTAL_SUM_VARIABLE)
     );
 
-    AggregationResults<Long> results = mongoTemplate
-            .aggregate(aggregation, PAYMENT_MONGO_COLLECTION_NAME, Long.class);
+    AggregationResults<TotalSumDto> results = mongoTemplate
+            .aggregate(aggregation, PAYMENT_MONGO_COLLECTION_NAME, TotalSumDto.class);
 
-    Long result = results.getUniqueMappedResult();
-    return result != null ? result : 0;
+    TotalSumDto result = results.getUniqueMappedResult();
+    return result != null ? result : new TotalSumDto(0L);
   }
 
   @Override
-  public long getTotalSumByDateRange(LocalDateTime startDate, LocalDateTime endDate) {
+  public TotalSumDto getTotalSumByDateRange(LocalDateTime startDate, LocalDateTime endDate) {
     Aggregation aggregation = Aggregation.newAggregation(
             Aggregation.match(
                     Criteria.where(TIMESTAMP_MONGO_KEY)
@@ -50,13 +52,13 @@ public class PaymentCustomRepositoryImpl implements PaymentCustomRepository {
             ),
             Aggregation.group()
                     .sum(PAYMENT_AMOUNT_MONGO_KEY)
-                    .as(TOTAL_VARIABLE)
+                    .as(TOTAL_SUM_VARIABLE)
     );
 
-    AggregationResults<Long> results = mongoTemplate
-            .aggregate(aggregation, PAYMENT_MONGO_COLLECTION_NAME, Long.class);
+    AggregationResults<TotalSumDto> results = mongoTemplate
+            .aggregate(aggregation, PAYMENT_MONGO_COLLECTION_NAME, TotalSumDto.class);
 
-    Long result = results.getUniqueMappedResult();
-    return result != null ? result : 0;
+    TotalSumDto result = results.getUniqueMappedResult();
+    return result != null ? result : new TotalSumDto(0L);
   }
 }
