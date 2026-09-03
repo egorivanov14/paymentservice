@@ -40,7 +40,7 @@ public class PaymentController {
   }
 
   @GetMapping("/user/{userId}/total")
-  public ResponseEntity<TotalSumDto> getTotalSumByUserId(
+  public ResponseEntity<TotalSumDto> getTotalSumByUserIdAndDateRange(
           @PathVariable Long userId,
           @RequestParam LocalDateTime startDate,
           @RequestParam LocalDateTime endDate) {

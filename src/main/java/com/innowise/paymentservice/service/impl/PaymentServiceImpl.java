@@ -63,13 +63,11 @@ public class PaymentServiceImpl implements PaymentService {
 
   @Override
   public TotalSumDto getTotalSumByUserIdAndDateRange(Long userId, LocalDateTime startDate, LocalDateTime endDate) {
-    long totalSum = paymentRepository.getTotalSumByUserIdAndDateRange(userId, startDate, endDate);
-    return new TotalSumDto(totalSum);
+    return paymentRepository.getTotalSumByUserIdAndDateRange(userId, startDate, endDate);
   }
 
   @Override
   public TotalSumDto getTotalSumByDateRange(LocalDateTime startDate, LocalDateTime endDate) {
-    long totalSum = paymentRepository.getTotalSumByDateRange(startDate, endDate);
-    return new TotalSumDto(totalSum);
+    return paymentRepository.getTotalSumByDateRange(startDate, endDate);
   }
 }
